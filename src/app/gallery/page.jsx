@@ -1,6 +1,6 @@
 const Gallery = () => {
   return (
-    <div>
+    <div className="pt-20">
       <h1 className="font-bebas text-6xl text-center mt-20">
         Gallery Page
         </h1>
