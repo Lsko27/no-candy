@@ -1,7 +1,7 @@
 const WeAreNoCandy = () => {
     return ( 
         <div>
-            <h1>
+            <h1 className="font-bebas text-6xl text-center mt-20 font-white">
                 We are NoCandy Page
             </h1>
         </div>

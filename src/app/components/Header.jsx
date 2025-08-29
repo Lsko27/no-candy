@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -13,13 +14,11 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex justify-between items-center p-5">
         {/* Logo */}
         <Link href="/">
-          <h1 className="text-2xl font-bold uppercase tracking-widest cursor-pointer">
-            NoCandy
-          </h1>
+          <Image src="/logo.png" alt="Logo" width={150} height={50} className="object-contain" />
         </Link>
 
         {/* Menu desktop */}
-        <nav className="hidden md:flex gap-10 font-semibold uppercase">
+        <nav className="hidden md:flex gap-10 font-semibold uppercase font-bebas text-2xl">
           {links.map((item) => (
             <Link
               key={item}
@@ -49,7 +48,7 @@ export default function Header() {
 
       {/* Mobile menu com animação de slide */}
       <nav
-        className={`md:hidden bg-black text-white flex flex-col items-center gap-6 py-5 transition-all duration-500 overflow-hidden ${
+        className={`md:hidden bg-transparent text-white flex flex-col items-center gap-6 py-5 transition-all duration-500 overflow-hidden ${
           open ? "max-h-96" : "max-h-0"
         }`}
       >
