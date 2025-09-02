@@ -5,7 +5,7 @@ import { faInstagram, faVimeo } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
-    <footer className="bg-transparent text-white py-6 px-5 border-t border-white/20">
+    <footer className="fixed bottom-0 w-full bg-transparent text-white py-6 px-5 z-50">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Copyright */}
         <p className="text-sm md:text-base font-inter">
@@ -40,7 +40,9 @@ const Footer = () => {
 
         {/* Desenvolvido por */}
         <div className="flex items-center gap-2">
-          <span className="text-sm md:text-base font-inter">Desenvolvido por</span>
+          <span className="text-sm md:text-base font-inter">
+            Desenvolvido por
+          </span>
           <Image src="/3xCoding.png" alt="Logo 3xCode" width={50} height={24} />
         </div>
       </div>

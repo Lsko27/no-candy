@@ -7,7 +7,6 @@ import {
   useTransform,
 } from "framer-motion";
 
-// Lista de vídeos com títulos e diretores
 const videoData = [
   { src: "video1.mp4", title: "Título 1", director: "John Doe" },
   { src: "video2.mp4", title: "Título 2", director: "Jane Smith" },
@@ -18,10 +17,11 @@ const videoData = [
 export default function VideoSlider() {
   const [index, setIndex] = useState(0);
   const videoRef = useRef(null);
-
   const progress = useMotionValue(0);
 
+  // Controla scroll do mouse para trocar vídeos
   const handleScroll = (e) => {
+    e.preventDefault(); // previne scroll real da página
     if (e.deltaY > 0) {
       setIndex((prev) => (prev + 1) % videoData.length);
     } else {
@@ -40,16 +40,14 @@ export default function VideoSlider() {
     };
 
     videoEl.addEventListener("timeupdate", updateProgress);
-
-    return () => {
-      videoEl.removeEventListener("timeupdate", updateProgress);
-    };
+    return () => videoEl.removeEventListener("timeupdate", updateProgress);
   }, [index, progress]);
 
   return (
     <div
       className="relative w-screen h-screen overflow-hidden"
       onWheel={handleScroll}
+      style={{ overscrollBehavior: "none" }} // evita scroll nativo residual
     >
       {/* Vídeo */}
       <AnimatePresence>
@@ -68,8 +66,10 @@ export default function VideoSlider() {
         />
       </AnimatePresence>
 
-      {/* Texto: Título + Diretor */}
-      {/* Texto: Título + Diretor centralizados */}
+      {/* Overlay escuro */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/10 z-20" />
+
+      {/* Título + Diretor */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-50">
         <motion.h2
           key={`title-${index}`}
@@ -93,14 +93,17 @@ export default function VideoSlider() {
         </motion.p>
       </div>
 
-      {/* Bolinhas de indicador */}
-      <div className="absolute right-5 top-1/2 transform -translate-y-1/2 flex flex-col gap-3 z-50">
+      {/* Indicador lateral */}
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 flex flex-col items-center z-50">
+        <div className="absolute top-0 bottom-0 w-[3px] bg-gray-300" />
         {videoData.map((_, i) => (
-          <div
+          <button
             key={i}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              i === index ? "bg-white scale-125" : "bg-white/40"
+            onClick={() => setIndex(i)}
+            className={`w-6 h-6 rounded-full transition-all duration-300 mb-4 last:mb-0 ${
+              i === index ? "bg-white scale-125" : "bg-gray-300"
             }`}
+            aria-label={`Ir para o vídeo ${i + 1}`}
           />
         ))}
       </div>
