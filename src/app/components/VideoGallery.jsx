@@ -7,7 +7,13 @@ import {
   useTransform,
 } from "framer-motion";
 
-const videos = ["video1.mp4", "video2.mp4", "video3.mp4", "video4.mp4"];
+// Lista de vídeos com títulos e diretores
+const videoData = [
+  { src: "video1.mp4", title: "Título 1", director: "John Doe" },
+  { src: "video2.mp4", title: "Título 2", director: "Jane Smith" },
+  { src: "video3.mp4", title: "Título 3", director: "Ava DuVernay" },
+  { src: "video4.mp4", title: "Título 4", director: "Christopher Nolan" },
+];
 
 export default function VideoSlider() {
   const [index, setIndex] = useState(0);
@@ -17,9 +23,9 @@ export default function VideoSlider() {
 
   const handleScroll = (e) => {
     if (e.deltaY > 0) {
-      setIndex((prev) => (prev + 1) % videos.length);
+      setIndex((prev) => (prev + 1) % videoData.length);
     } else {
-      setIndex((prev) => (prev - 1 + videos.length) % videos.length);
+      setIndex((prev) => (prev - 1 + videoData.length) % videoData.length);
     }
   };
 
@@ -50,10 +56,10 @@ export default function VideoSlider() {
         <motion.video
           key={index}
           ref={videoRef}
-          src={videos[index]}
+          src={videoData[index].src}
           autoPlay
           muted
-          onEnded={() => setIndex((prev) => (prev + 1) % videos.length)}
+          onEnded={() => setIndex((prev) => (prev + 1) % videoData.length)}
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ y: "100%" }}
           animate={{ y: "0%" }}
@@ -62,9 +68,34 @@ export default function VideoSlider() {
         />
       </AnimatePresence>
 
+      {/* Texto: Título + Diretor */}
+      {/* Texto: Título + Diretor centralizados */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-50">
+        <motion.h2
+          key={`title-${index}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+          className="text-5xl font-bold drop-shadow-lg"
+        >
+          {videoData[index].title}
+        </motion.h2>
+        <motion.p
+          key={`director-${index}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 2, delay: 0.2, ease: "easeInOut" }}
+          className="text-xl opacity-80 mt-4 drop-shadow-md"
+        >
+          Directed by {videoData[index].director}
+        </motion.p>
+      </div>
+
       {/* Bolinhas de indicador */}
       <div className="absolute right-5 top-1/2 transform -translate-y-1/2 flex flex-col gap-3 z-50">
-        {videos.map((_, i) => (
+        {videoData.map((_, i) => (
           <div
             key={i}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
@@ -74,12 +105,11 @@ export default function VideoSlider() {
         ))}
       </div>
 
-      {/* Círculo de progresso - canto inferior direito */}
+      {/* Círculo de progresso */}
       <svg
         className="absolute bottom-5 right-5 w-12 h-12 z-50"
         viewBox="0 0 36 36"
       >
-        {/* Fundo do círculo */}
         <circle
           cx="18"
           cy="18"
@@ -89,7 +119,6 @@ export default function VideoSlider() {
           strokeWidth="2"
           fill="none"
         />
-        {/* Progresso animado */}
         <motion.circle
           cx="18"
           cy="18"

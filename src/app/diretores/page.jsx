@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const directors = [
   { name: "Diretor 1", video: "/video1.mp4" },
-  { name: "Diretor 2", video: "/video2.mp4" },
-  { name: "Diretor 3", video: "/video3.mp4" },
+  { name: "Diretor 2", video: "/video3.mp4" },
+  { name: "Diretor 3", video: "/video4.mp4" },
 ];
 
 const Directors = () => {

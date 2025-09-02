@@ -41,7 +41,7 @@ const Footer = () => {
         {/* Desenvolvido por */}
         <div className="flex items-center gap-2">
           <span className="text-sm md:text-base font-inter">Desenvolvido por</span>
-          <Image src="/3xCoding.png" alt="Logo 3xCode" width={64} height={24} />
+          <Image src="/3xCoding.png" alt="Logo 3xCode" width={50} height={24} />
         </div>
       </div>
     </footer>
