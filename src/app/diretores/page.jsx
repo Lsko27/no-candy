@@ -1,11 +1,16 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const directors = [
-  { name: "Diretor 1", video: "/video1.mp4" },
-  { name: "Diretor 2", video: "/video3.mp4" },
-  { name: "Diretor 3", video: "/video4.mp4" },
+  { name: "John Doe", slug: "john-doe", video: "/video1.mp4" },
+  { name: "Jane Smith", slug: "jane-smith", video: "/video2.mp4" },
+  { name: "Ava DuVernay", slug: "ava-duvernay", video: "/video3.mp4" },
+  { name: "Christopher Nolan", slug: "christopher-nolan", video: "/video4.mp4" },
+  { name: "Adonis Creed", slug: "adonis-creed", video: "/video5.mp4" },
+  { name: "Yuri Lesko", slug: "yuri-lesko", video: "/video6.mp4" },
+  { name: "Mark Allanstrong", slug: "mark-allanstrong", video: "/video7.mp4" },
 ];
 
 const Directors = () => {
@@ -42,15 +47,15 @@ const Directors = () => {
       {/* Conteúdo */}
       <div className="relative z-20 grid grid-cols-2 min-h-screen">
         {/* Coluna esquerda - lista de diretores */}
-        <div className="flex flex-col items-center justify-center space-y-8 pl-20">
+        <div className="flex flex-col items-center justify-center space-y-3 pl-20">
           {directors.map((director, index) => (
             <h2
               key={index}
               onMouseEnter={() => setHoveredVideo(director.video)}
               onMouseLeave={() => setHoveredVideo(null)}
-              className="text-5xl font-bold uppercase cursor-pointer transition-all duration-300 hover:text-gray-200 hover:scale-105 hover:tracking-wider"
+              className="text-3xl font-bold uppercase cursor-pointer transition-all duration-300 hover:text-gray-200 hover:scale-105 hover:tracking-wider"
             >
-              {director.name}
+              <Link href={`/diretores/${director.slug}`}>{director.name}</Link>
             </h2>
           ))}
         </div>

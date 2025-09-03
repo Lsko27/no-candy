@@ -10,12 +10,48 @@ import Link from "next/link";
 
 // Lista de vídeos com títulos e diretores
 const videoData = [
-  { src: "video1.mp4", title: "Infinite Corridor", director: "John Doe" },
-  { src: "video2.mp4", title: "Space Orbit", director: "Jane Smith" },
-  { src: "video3.mp4", title: "Beauty of Nature", director: "Ava DuVernay" },
-  { src: "video4.mp4", title: "The BMW Beast", director: "Christopher Nolan" },
-  { src: "video5.mp4", title: "Blackout", director: "Adonis Creed" },
-  { src: "video6.mp4", title: "Kia Stinger GT", director: "Yuri Lesko" },
+  {
+    src: "video1.mp4",
+    title: "Infinite Corridor",
+    director: "John Doe",
+    slug: "john-doe",
+  },
+  {
+    src: "video2.mp4",
+    title: "Space Orbit",
+    director: "Jane Smith",
+    slug: "jane-smith",
+  },
+  {
+    src: "video3.mp4",
+    title: "Beauty of Nature",
+    director: "Ava DuVernay",
+    slug: "ava-duvernay",
+  },
+  {
+    src: "video4.mp4",
+    title: "The BMW Beast",
+    director: "Christopher Nolan",
+    slug: "christopher-nolan",
+  },
+  {
+    src: "video5.mp4",
+    title: "Blackout",
+    director: "Adonis Creed",
+    slug: "adonis-creed",
+  },
+  {
+    src: "video6.mp4",
+    title: "Kia Stinger GT",
+    director: "Yuri Lesko",
+    slug: "yuri-lesko",
+  },
+  {
+    src: "video7.mp4",
+    title: "Mercedez AMG",
+    director: "Mark Allanstrong",
+    slug: "mark-allanstrong",
+  },
 ];
 
 export default function VideoSlider() {
@@ -95,7 +131,7 @@ export default function VideoSlider() {
           className="text-xl opacity-80 mt-4 drop-shadow-md"
         >
           Directed by{" "}
-          <Link href={`/diretores/${videoData[index].director}`}>
+          <Link href={`/diretores/${videoData[index].slug}`}>
             {videoData[index].director}
           </Link>
         </motion.p>
