@@ -117,7 +117,7 @@ export default function VideoSlider() {
     >
       {/* Clicar no vídeo abre modal */}
       <div
-        className="absolute inset-0 z-50 cursor-pointer"
+        className="absolute inset-0 z-40 cursor-pointer"
         onClick={() => {
           setModalVideoUrl(videoData[index].src);
           setIsModalOpen(true);

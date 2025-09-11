@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
       <body className="bg-black text-white overflow-x-hidden">
-        <Header />
+        <Header/>
         <PageTransition>
           <main>{children}</main>
         </PageTransition>
