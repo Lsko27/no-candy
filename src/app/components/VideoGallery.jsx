@@ -54,7 +54,6 @@ const videoData = [
   },
 ];
 
-// Modal estilo Soldiers
 function VideoModal({ videoUrl, isOpen, onClose }) {
   return (
     <AnimatePresence>
@@ -63,26 +62,30 @@ function VideoModal({ videoUrl, isOpen, onClose }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+          className="fixed inset-0 z-60 flex items-center justify-center bg-black/95 backdrop-blur-sm"
         >
+          {/* Botão fechar */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-50 p-2 text-white hover:bg-white/20 rounded-full"
+            className="absolute top-4 right-4 z-70 p-2 text-white hover:bg-white/20 rounded-full"
           >
-            <X size={24} />
+            <X size={28} />
           </button>
+
+          {/* Vídeo full-screen */}
           <video
             preload="metadata"
             src={videoUrl}
             controls
             autoPlay
-            className="w-full max-w-5xl h-auto cursor-none rounded-md"
+            className="w-full h-full object-contain"
           />
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
+
 
 export default function VideoSlider() {
   const [index, setIndex] = useState(0);
