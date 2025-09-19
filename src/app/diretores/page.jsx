@@ -1,20 +1,46 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
-const directors = [
-  { name: "John Doe", slug: "john-doe", video: "/video1.mp4" },
-  { name: "Jane Smith", slug: "jane-smith", video: "/video2.mp4" },
-  { name: "Ava DuVernay", slug: "ava-duvernay", video: "/video3.mp4" },
-  { name: "Christopher Nolan", slug: "christopher-nolan", video: "/video4.mp4" },
-  { name: "Adonis Creed", slug: "adonis-creed", video: "/video5.mp4" },
-  { name: "Yuri Lesko", slug: "yuri-lesko", video: "/video6.mp4" },
-  { name: "Mark Allanstrong", slug: "mark-allanstrong", video: "/video7.mp4" },
-];
-
 const Directors = () => {
+  const [directors, setDirectors] = useState([]);
   const [hoveredVideo, setHoveredVideo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // 🔥 Buscar diretores da API
+  useEffect(() => {
+    async function fetchDirectors() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/directors`);
+        if (!res.ok) throw new Error("Erro ao carregar diretores");
+        const data = await res.json();
+
+        // Transformar a URL de vídeo para absoluta
+        const mapped = data.map((d) => ({
+          ...d,
+          videoUrl: d.homeSlides?.[0]?.mediaUrl
+            ? `${process.env.NEXT_PUBLIC_API_URL}${d.homeSlides[0].mediaUrl}`
+            : null,
+        }));
+
+        setDirectors(mapped);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchDirectors();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center text-white">
+        Carregando diretores...
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
@@ -48,19 +74,19 @@ const Directors = () => {
       <div className="relative z-20 grid grid-cols-2 min-h-screen">
         {/* Coluna esquerda - lista de diretores */}
         <div className="flex flex-col items-center justify-center space-y-3 pl-20">
-          {directors.map((director, index) => (
+          {directors.map((director) => (
             <h2
-              key={index}
-              onMouseEnter={() => setHoveredVideo(director.video)}
+              key={director.id}
+              onMouseEnter={() => setHoveredVideo(director.videoUrl)}
               onMouseLeave={() => setHoveredVideo(null)}
               className="text-3xl font-bold uppercase cursor-pointer transition-all duration-300 hover:text-gray-200 hover:scale-105 hover:tracking-wider"
             >
-              <Link href={`/diretores/${director.slug}`}>{director.name}</Link>
+              <Link href={`/diretores/${director.id}`}>{director.name}</Link>
             </h2>
           ))}
         </div>
 
-        {/* Coluna direita - vazia */}
+        {/* Coluna direita - pode usar para detalhes ou galeria */}
         <div />
       </div>
     </div>
