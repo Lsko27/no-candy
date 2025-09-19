@@ -67,7 +67,6 @@ export default function Gallery() {
                 className="w-full h-40 object-cover rounded"
                 unoptimized
               />
-              <p className="text-center mt-2 font-medium">{img.name}</p>
             </div>
           ))}
         </div>
