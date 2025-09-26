@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
+import { sendEmail } from "@/services/email.service";
+import { toast } from "sonner";
 
 // === Definindo esquema de validação com Zod ===
 const contactSchema = z.object({
@@ -28,10 +30,14 @@ const Contact = () => {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Enviado:", data);
-    setSubmitted(true);
-    reset(); // limpa o form
+  const onSubmit = async (data) => {
+    try {
+      await sendEmail(data.name, data.email, data.message);
+      setSubmitted(true);
+      reset();
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+    }
   };
 
   return (
@@ -41,11 +47,7 @@ const Contact = () => {
           Contato
         </h1>
 
-        {submitted && (
-          <p className="text-green-400 text-center mb-6">
-            Formulário enviado com sucesso!
-          </p>
-        )}
+        {submitted && toast.success("Mensagem enviada com sucesso!")}
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           {/* Nome */}
@@ -59,9 +61,7 @@ const Contact = () => {
             <label className="absolute left-2 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-2 peer-focus:text-sm peer-focus:text-white">
               Nome
             </label>
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-            )}
+            {errors.name && toast.error(errors.name.message)}
           </div>
 
           {/* Email */}
@@ -75,11 +75,7 @@ const Contact = () => {
             <label className="absolute left-2 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-2 peer-focus:text-sm peer-focus:text-white">
               Email
             </label>
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email.message}
-              </p>
-            )}
+            {errors.email && toast.error(errors.email.message)}
           </div>
 
           {/* Mensagem */}
@@ -93,11 +89,7 @@ const Contact = () => {
             <label className="absolute left-2 top-2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-2 peer-focus:text-sm peer-focus:text-white">
               Mensagem
             </label>
-            {errors.message && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.message.message}
-              </p>
-            )}
+            {errors.message && toast.error(errors.message.message)}
           </div>
 
           {/* Botão */}
