@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { X } from "lucide-react";
-import Image from "next/image";
 
 // Modal para vídeos
 function VideoModal({ videoUrl, isOpen, onClose }) {

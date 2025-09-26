@@ -52,7 +52,7 @@ export default function VideoSlider() {
     async function fetchVideos() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/home_slides`
+          `${process.env.NEXT_PUBLIC_API_URL}/home-slides`
         );
         if (!res.ok) throw new Error("Erro ao carregar vídeos");
         const data = await res.json();
